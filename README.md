@@ -99,7 +99,10 @@ Full tables: `results/summary.md`. Every prediction: `results/predictions.csv`.
 4. Wait for the build (a few minutes), then open the Space link on your phone and add it to the home screen.
 
 ## How to run
+Needs Python 3.10 or newer. On a Mac, use `python3`; there is no `pip` command until you create the environment below.
 ```bash
+python3 -m venv .venv                    # once
+source .venv/bin/activate                # every new terminal (Windows: .venv\Scripts\activate)
 pip install -r requirements.txt
 python scripts/train_layer1.py           # ~2 min on CPU
 python -m pytest -q                      # 35 tests, no API calls
