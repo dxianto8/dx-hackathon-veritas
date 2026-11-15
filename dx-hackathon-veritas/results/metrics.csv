@@ -1,0 +1,21 @@
+system,language,scams_caught,recall,missed_scams,false_alarms,precision,f1
+Always 'not scam' (baseline),ALL,0/60,0.0,60,0/60,0.0,0.0
+Always 'not scam' (baseline),en,0/20,0.0,20,0/20,0.0,0.0
+Always 'not scam' (baseline),es,0/20,0.0,20,0/20,0.0,0.0
+Always 'not scam' (baseline),zh,0/20,0.0,20,0/20,0.0,0.0
+"TF-IDF + LR, English-trained (baseline)",ALL,13/60,0.22,47,8/60,0.62,0.32
+"TF-IDF + LR, English-trained (baseline)",en,11/20,0.55,9,6/20,0.65,0.59
+"TF-IDF + LR, English-trained (baseline)",es,1/20,0.05,19,0/20,1.0,0.1
+"TF-IDF + LR, English-trained (baseline)",zh,1/20,0.05,19,2/20,0.33,0.09
+Layer 1: multilingual embeddings + LR,ALL,45/60,0.75,15,12/60,0.79,0.77
+Layer 1: multilingual embeddings + LR,en,16/20,0.8,4,5/20,0.76,0.78
+Layer 1: multilingual embeddings + LR,es,14/20,0.7,6,3/20,0.82,0.76
+Layer 1: multilingual embeddings + LR,zh,15/20,0.75,5,4/20,0.79,0.77
+Upper bound: share of scams that reach agent (threshold routing),ALL,40/60,0.67,20,11/60,0.78,0.72
+Upper bound: share of scams that reach agent (threshold routing),en,13/20,0.65,7,4/20,0.76,0.7
+Upper bound: share of scams that reach agent (threshold routing),es,13/20,0.65,7,3/20,0.81,0.72
+Upper bound: share of scams that reach agent (threshold routing),zh,14/20,0.7,6,4/20,0.78,0.74
+Upper bound: share of scams that reach agent (threshold + tool-signal routing),ALL,57/60,0.95,3,16/60,0.78,0.86
+Upper bound: share of scams that reach agent (threshold + tool-signal routing),en,19/20,0.95,1,6/20,0.76,0.84
+Upper bound: share of scams that reach agent (threshold + tool-signal routing),es,19/20,0.95,1,5/20,0.79,0.86
+Upper bound: share of scams that reach agent (threshold + tool-signal routing),zh,19/20,0.95,1,5/20,0.79,0.86
