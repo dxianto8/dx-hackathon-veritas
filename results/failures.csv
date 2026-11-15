@@ -1,28 +1,5 @@
-language,label,scam_type,text,p_layer1
-en,scam,bank_account_hold,Wells Fargo: a hold has been placed on your account. Reactivate now to avoid closure: http://wellsfarg0-secure.com/verify,0.30146015
-en,scam,job_task,"Hello, Walmart HR is hiring online assessors. Work from home, $250/day, no experience needed. Reply YES if interested.",0.32064724
-en,scam,wrong_number,"Hi Mark, are we still on for coffee tomorrow at 10? It's Jessica from the yoga class.",0.16872233
-en,scam,wrong_number,"Sorry, wrong number! You seem kind though. I'm Lily, I work in crypto investing in Singapore. Would you like to be friends?",0.45725533
-en,legit,verification_code,Your Google verification code is 482913. Don't share this code with anyone.,0.964197
-en,legit,verification_code,Venmo: 731052 is your verification code. Never share this code. Venmo will never call to ask for it.,0.8240455
-en,legit,bank_alert,"Chase: A $45.20 card purchase at TARGET was made on 11/14. If this wasn't you, call the number on the back of your card. No reply needed.",0.92328143
-en,legit,everyday,Can you send me the address for the party?,0.519568
-en,legit,toll_real,Your E-ZPass statement is available. Log in to your account at e-zpassny.com to view it.,0.6785687
-es,scam,bank_account_hold,Wells Fargo: su cuenta ha sido bloqueada temporalmente. Reactívela ahora para evitar el cierre: http://wellsfarg0-seguro.com/verificar,0.37492535
-es,scam,job_task,"Hola, Walmart está contratando evaluadores en línea. Trabajo desde casa, $250 al día, sin experiencia. Responda SÍ si le interesa.",0.2965294
-es,scam,job_task,"¡Felicidades! Sus tareas de optimización generaron $1,480. Para retirar sus ganancias, deposite 200 USDT y complete la última serie de tareas.",0.35330087
-es,scam,wrong_number,"Hola Carlos, ¿seguimos con el café mañana a las 10? Soy Jessica, de la clase de yoga.",0.024593702
-es,scam,wrong_number,"Perdón, número equivocado. Pareces muy amable. Soy Lily, trabajo en inversiones de criptomonedas en Singapur. ¿Te gustaría ser mi amigo?",0.31425786
-es,scam,bank_account_hold,BBVA: Su tarjeta ha sido desactivada por seguridad. Para reactivarla ingrese a bbva-mx-seguridad.icu,0.37383842
-es,legit,verification_code,Tu código de verificación de Google es 482913. No lo compartas con nadie.,0.94058454
-es,legit,verification_code,WhatsApp: tu código es 731-052. No compartas este código con nadie.,0.8295294
-es,legit,bank_alert,"Chase: Se realizó una compra de $45.20 en TARGET el 14/11. Si no fue usted, llame al número al reverso de su tarjeta.",0.7875833
-zh,scam,authority_impersonation,【中国驻芝加哥总领事馆】您有一份重要文件待领取，涉及您的护照问题。逾期将影响您的签证，请立即回电 1-312-555-0166 按9转人工。,0.12571706
-zh,scam,authority_impersonation,您好，这里是上海市公安局。您的身份证涉嫌一起洗钱案件，请立即添加办案警官微信配合调查，否则将发布通缉令。,0.46687424
-zh,scam,insurance_impersonation,"【医保理赔部】系统显示您近期在中国有一笔手术理赔申请，金额$8,600。如非本人申请，请回复1联系专员核实。",0.40444046
-zh,scam,wrong_number,王姐，明天上午10点的茶还约吗？我是瑜伽课的小琳。,0.0056483913
-zh,scam,wrong_number,不好意思发错了。不过你看起来人很好，我叫Lily，在新加坡做加密货币投资，可以交个朋友吗？,0.27393007
-zh,legit,verification_code,【微信】验证码：482913，用于登录验证，请勿泄露给他人。,0.9217315
-zh,legit,verification_code,Your Google verification code is 731052. 请勿将验证码告诉任何人。,0.9065151
-zh,legit,bank_alert,【Chase】您的信用卡于11/14在TARGET消费$45.20。如非本人消费，请拨打卡背面的电话。,0.95874125
-zh,legit,delivery,【UPS】您的包裹预计今天下午2点至6点送达。查询：https://www.ups.com/track?tracknum=1Z999AA10123456784,0.81292915
+language,label,scam_type,text,p_layer1,agent_verdict,agent_explanation
+en,scam,wrong_number,"Hi Mark, are we still on for coffee tomorrow at 10? It's Jessica from the yoga class.",0.16872233,suspicious,"If you are Mark and you know Jessica from yoga, this is a normal message and it's fine. If you don't know her, it may be a ""wrong number"" text that scammers use to start a friendly chat, which later turns into asking for money or investments. Don't reply. Just delete it, or block the number."
+es,scam,wrong_number,"Hola Carlos, ¿seguimos con el café mañana a las 10? Soy Jessica, de la clase de yoga.",0.024593702,safe,"Este mensaje parece una conversación normal entre conocidos: no tiene enlaces ni pide dinero ni datos. Si usted conoce a Jessica de la clase de yoga, puede contestar tranquilo. Pero si no la conoce o usted no se llama Carlos, no conteste, porque a veces los estafadores empiezan así con un ""número equivocado""."
+zh,scam,wrong_number,王姐，明天上午10点的茶还约吗？我是瑜伽课的小琳。,0.0056483913,safe,"这条短信看起来是瑜伽课朋友小琳确认明天喝茶的普通消息，没有链接，也没有要钱或要个人信息。如果您认识小琳，可以放心回复。如果您不认识她，或者您不姓王，那可能是""发错号码""的搭讪骗局，请不要回复。"
+zh,legit,verification_code,Your Google verification code is 731052. 请勿将验证码告诉任何人。,0.9065151,suspicious,这条短信只是一个Google验证码，没有链接，也没有要求您做任何事。如果是您自己刚刚在登录Google，那就没问题；如果不是您自己申请的，可能有人想登录您的账户或用您的号码注册。无论如何，千万不要把这个验证码告诉任何人，包括自称是Google或朋友的人；如果不是您申请的，请让家人帮您修改Google密码。

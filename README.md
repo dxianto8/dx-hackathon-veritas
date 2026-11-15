@@ -45,20 +45,33 @@ Results on the held-out *Scams 2026* test set. "Suspicious" counts as flagged. R
 | Layer 1 (multilingual embeddings) | en | 16/20 | 4 | 5/20 | 0.76 | 0.78 |
 | | es | 14/20 | 6 | 3/20 | 0.82 | 0.76 |
 | | zh | 15/20 | 5 | 4/20 | 0.79 | 0.77 |
-| Two layers (our system) | en/es/zh | _run `--agent`_ | | | | |
-| Claude agent on every message | en/es/zh | _run `--agent-only`_ | | | | |
+| **Two layers (our system)** | en | **19/20** | 1 | **0/20** | 1.00 | **0.97** |
+| | es | **19/20** | 1 | **0/20** | 1.00 | **0.97** |
+| | zh | **19/20** | 1 | 1/20 | 0.95 | **0.95** |
+| Claude agent on every message | en | 20/20 | 0 | 0/20 | 1.00 | 1.00 |
+| | es | 19/20 | 1 | 0/20 | 1.00 | 0.97 |
+| | zh | 19/20 | 1 | 1/20 | 0.95 | 0.95 |
 
-**Key findings so far**
+| System | Claude API calls (of 120) | Cost for 120 messages |
+|---|---|---|
+| Two layers (our system) | 73 | $2.84 |
+| Two layers, routing by Layer 1 threshold only | 51 | $2.00, but catches only 40/60 scams |
+| Claude agent on every message | 120 | $4.39 |
+
+**Key findings**
 1. **The word-based filter collapses outside English.** It catches 1 in 20 Spanish or Chinese scams, because those words never appear in its English training data.
 2. **Multilingual embeddings transfer.** With the same English-only training data, Layer 1 catches 70–80% of scams in all three languages.
 3. **A threshold tuned on English doesn't transfer perfectly.** Routing by Layer 1's probability alone sends only 65–70% of the 2026 scams to the agent. Adding our tools' warning signs to the routing raises that to **95% in every language** (57/60). The cost is that 16 of 60 normal messages also get a (cheap) agent check.
+4. **The agent turns "flagged" into "right".** Layer 1 alone raised 12 false alarms on 60 normal messages. The agent cleared all but one of them, and it called every one of the 57 scams it received a scam. Overall, the two-layer system catches 57/60 scams with 1 false alarm (F1 0.95–0.97 in every language).
+5. **Two layers are nearly as good as Claude on everything, for 35% less.** Claude checking all 120 messages catches one more scam (58 vs 57) but costs $4.39 instead of $2.84. With two layers, 47 of 120 messages never leave the phone, which also matters for privacy.
 
 Full tables: `results/summary.md`. Every prediction: `results/predictions.csv`.
 
 **Where it fails, and why**
-- **"Wrong number" openers** ("Hi Mark, are we still on for coffee tomorrow?") contain nothing suspicious. They are just the first step of a scam that builds trust over weeks ([FTC](https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2025/04/top-text-scams-2024)). No single-message checker can catch them reliably; the best it can do is "suspicious: a stranger who texted by mistake".
-- **Real company messages look like scams.** Genuine UPS or Amazon delivery texts match the "package" scam pattern. The agent has to notice that the link goes to the official domain and that nothing is being asked for.
-- **Phone-number-only scams** ("Zelle: a $950 payment was sent… call 1-833-…") have no link for the link inspector to check.
+- **All 3 missed scams are "wrong number" openers** ("Hi Mark, are we still on for coffee tomorrow? It's Jessica from yoga"). They contain nothing suspicious: no link, no money, no urgency. They are just the first step of a scam that builds trust over weeks ([FTC](https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2025/04/top-text-scams-2024)). Layer 1 gave them a 1–17% scam probability, so they never reached the agent.
+- **The agent judged the same message differently by language.** When we sent the "wrong number" message to Claude in all three languages (agent-on-everything run), it said **"suspicious" in English** but **"safe" in Spanish and Chinese**. All three explanations mention the wrong-number trick, but only the English verdict acted on it. This is one message per language, so it's a lead rather than proof, but it suggests non-English speakers could get weaker protection, which is exactly the gap this project is about. A fix to test next: tell the agent to rate any message from an unknown sender that starts a conversation as "suspicious".
+- **The 1 false alarm:** a real Google verification code with a Chinese warning line (`Your Google verification code is 731052. 请勿将验证码告诉任何人。`). Layer 1 gave it 0.91, perhaps because of the mixed languages and the number, and the agent said "suspicious". Its explanation is still sensible: "if you didn't request this code, someone may be trying to log in to your account."
+- **Real company messages look like scams.** Genuine UPS or Amazon delivery texts match the "package" scam pattern. The agent handled them correctly: the link goes to the official domain and nothing is being asked for.
 - See `results/failures.csv` for each mistake.
 
 **Honest limits:** the test set is small (120 messages), and its messages were drafted with an AI assistant from public warnings rather than collected from real phones. They still need checking by native speakers (see "What we'd do next").
@@ -74,8 +87,8 @@ python scripts/train_layer1.py           # ~2 min on CPU
 python -m pytest -q                      # 26 tests, no API calls
 python scripts/evaluate.py               # free part of the evaluation
 export ANTHROPIC_API_KEY=...             # never commit your key
-python scripts/evaluate.py --agent       # two-layer system (estimated ~$3-5)
-python scripts/evaluate.py --agent --agent-only   # adds agent-on-everything (estimated ~$5 more)
+python scripts/evaluate.py --agent       # two-layer system (we paid $2.84)
+python scripts/evaluate.py --agent --agent-only   # both systems (we paid $4.39 in total)
 python app.py                            # demo at http://127.0.0.1:7860
 ```
 Agent answers are cached in `results/agent_cache.jsonl`, so reruns are free. Spending stops at `--budget` dollars (default $10).
