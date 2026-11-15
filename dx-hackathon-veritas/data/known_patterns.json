@@ -1,0 +1,30 @@
+{
+  "_comment": "Scam patterns from public warnings. Keywords are lower-case; Chinese keywords match as substrings.",
+  "patterns": [
+    {"id": "toll_fee", "name": "Fake unpaid toll notice",
+     "source_url": "https://consumer.ftc.gov/consumer-alerts/2025/01/got-text-about-unpaid-tolls-its-probably-scam",
+     "keywords": ["toll", "e-zpass", "ezpass", "sunpass", "fastrak", "tollway", "i-pass", "peaje", "过路费", "通行费"]},
+    {"id": "package_fee", "name": "Fake delivery problem / redelivery or customs fee",
+     "source_url": "https://www.fcc.gov/how-identify-and-avoid-package-delivery-scams",
+     "keywords": ["package", "parcel", "redelivery", "customs", "tariff", "shipping", "paquete", "aduana", "arancel", "reenvío", "包裹", "海关", "关税", "派送", "投递"]},
+    {"id": "fake_fraud_alert", "name": "Fake fraud alert / 'move money to a safe account'",
+     "source_url": "https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2025/04/top-text-scams-2024",
+     "keywords": ["suspicious activity", "safe account", "did you authorize", "reply yes or no", "fraud dept", "actividad sospechosa", "cuenta segura", "autorizó", "异常交易", "安全账户", "如非本人操作"]},
+    {"id": "bank_account_hold", "name": "Account locked / reactivate via link",
+     "source_url": "https://www.fcc.gov/scam-glossary",
+     "keywords": ["hold has been placed", "locked", "reactivate", "verify identity", "suspended", "bloqueada", "reactívela", "verifique su identidad", "desactivada", "冻结", "解除冻结", "身份验证", "实名认证", "已被限制"]},
+    {"id": "job_task", "name": "Job / task scam (pay to unlock earnings, unsolicited recruiter)",
+     "source_url": "https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams",
+     "keywords": ["recruit", "remote", "work from home", "per day", "/day", "tasks", "usdt", "reply yes if interested", "reply interested", "trabajo", "desde casa", "al día", "tareas", "me interesa", "兼职", "日赚", "佣金", "提现", "充值", "招聘"]},
+    {"id": "wrong_number", "name": "'Wrong number' opener leading to friendship/investment scam",
+     "source_url": "https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2025/04/top-text-scams-2024",
+     "keywords": ["wrong number", "crypto", "be friends", "número equivocado", "criptomonedas", "发错了", "加密货币", "交个朋友"]},
+    {"id": "authority_impersonation", "name": "Police / embassy / consulate impersonation (often targeting Chinese speakers)",
+     "source_url": "https://www.fbi.gov/investigate/cyber/alerts/2024/chinese-police-imposters-incorporate-aggressive-tactics-to-target-us-based-chinese-community",
+     "keywords": ["consulate", "embassy", "police", "arrest warrant", "money laundering", "consulado", "embajada", "领事馆", "大使馆", "公安", "警官", "通缉", "洗钱", "保证金", "遣返", "不要告诉", "勿告知", "监控"]},
+    {"id": "insurance_impersonation", "name": "Health insurance claim impersonation",
+     "source_url": "https://www.fbi.gov/investigate/cyber/alerts/2025/criminals-impersonate-us-health-insurance-providers-and-chinese-law-enforcement-to-target-chinese-speakers-residing-in-the-united-states",
+     "keywords": ["insurance claim", "surgery", "reclamo de seguro", "cirugía", "医保", "理赔", "手术"]}
+  ],
+  "urgency_keywords": ["immediately", "now", "within 24 hours", "within 12 hours", "final reminder", "avoid", "inmediato", "ahora", "en 24 horas", "evitar", "立即", "尽快", "24小时内", "12小时内", "逾期", "否则"]
+}
