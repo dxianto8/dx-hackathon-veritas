@@ -63,7 +63,7 @@ Results on the held-out *Scams 2026* test set. "Suspicious" counts as flagged. R
 2. **Multilingual embeddings transfer.** With the same English-only training data, Layer 1 catches 70–80% of scams in all three languages.
 3. **A threshold tuned on English doesn't transfer perfectly.** Routing by Layer 1's probability alone sends only 65–70% of the 2026 scams to the agent. Adding our tools' warning signs to the routing raises that to **95% in every language** (57/60). The cost is that 16 of 60 normal messages also get a (cheap) agent check.
 4. **The agent turns "flagged" into "right".** Layer 1 alone raised 12 false alarms on 60 normal messages. The agent cleared all but one of them, and it called every one of the 57 scams it received a scam. Overall, the two-layer system catches 57/60 scams with 1 false alarm (F1 0.95–0.97 in every language).
-5. **Two layers are nearly as good as Claude on everything, for 35% less.** Claude checking all 120 messages catches one more scam (58 vs 57) but costs $4.39 instead of $2.84. With two layers, 47 of 120 messages never leave the phone, which also matters for privacy.
+5. **Two layers are nearly as good as Claude on everything, for 35% less.** Claude checking all 120 messages catches one more scam (58 vs 57) but costs $4.39 instead of $2.84. With two layers, 47 of 120 messages are never sent to an outside AI company (Layer 1 runs on our own computer or server), which also matters for privacy.
 
 Full tables: `results/summary.md`. Every prediction: `results/predictions.csv`.
 
