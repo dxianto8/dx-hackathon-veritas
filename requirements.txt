@@ -1,0 +1,8 @@
+anthropic>=2.8
+sentence-transformers>=3.0
+scikit-learn>=1.4
+pandas>=2.0
+joblib
+gradio>=4.0
+pytest
+tabulate
