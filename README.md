@@ -92,7 +92,13 @@ Full tables: `results/summary.md`. Every prediction: `results/predictions.csv`.
 - **Design for older eyes:** it uses the Atkinson Hyperlegible typeface (made for low-vision readers) at an 18px base size, a stamp you can read at a glance, and high-contrast colours.
 - Note: the results above were measured with explanations in the message's own language. The "explain in your language" and translation features were added to the app afterwards and haven't been through the same evaluation yet.
 
-## Deploy it (free, Hugging Face Spaces)
+## Record a phone demo on a Mac (Xcode Simulator)
+1. Start the app: `source .venv/bin/activate && ANTHROPIC_API_KEY=your-key python app.py`
+2. In a second Terminal: `bash scripts/iphone_demo.sh` (or name a device: `bash scripts/iphone_demo.sh "iPhone 16 Pro"`)
+3. It boots a virtual iPhone, opens SecondLook in Safari and sets a clean status bar. Press Enter to start recording and Enter again to stop. The video is saved as `secondlook-demo.mp4`.
+
+## Deploy it (Hugging Face Spaces)
+Note: since 2026, a Gradio Space on Hugging Face's CPU hardware needs a PRO account ($9 a month). A free account older than 30 days can host Gradio Spaces on ZeroGPU instead.
 1. `python scripts/build_hf_space.py` builds `dist/hf_space/`.
 2. At huggingface.co, go to **New Space**, choose the **Gradio** SDK and the free **CPU basic** hardware, then upload everything inside `dist/hf_space/`.
 3. In the Space's **Settings → Variables and secrets**, add the secret `ANTHROPIC_API_KEY`. Never put a key in a file.
