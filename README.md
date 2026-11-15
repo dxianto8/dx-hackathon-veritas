@@ -1,4 +1,5 @@
-# Is This Text a Scam? — A Multilingual Scam Checker
+# SecondLook: look twice before you tap
+A multilingual scam-text checker, made as a phone app.
 **Track:** Finance
 **Team:** _names_
 
@@ -8,7 +9,11 @@
 Scam texts cost Americans $470 million in 2024 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2025/04/new-ftc-data-show-top-text-message-scams-2024-overall-losses-text-scams-hit-470-million)), and scammers write to immigrant families in their home language, too: the FBI and FCC warn about scams aimed specifically at Chinese speakers in the US. Our user is an **immigrant grandparent** who gets texts in English and in Spanish or Chinese. When a strange text arrives with a link, they want to know "is this safe?" *before* tapping it. Most spam filters are trained on old English data and have never seen a 2026 toll scam written in Spanish or Chinese.
 
 ## What we built
-You paste a text message and get back a verdict (**scam / suspicious / safe**), a confidence score, a list of warning signs, and a 2–3 sentence explanation **in the same language as the message**, so the user learns to spot the trick themselves.
+**SecondLook** is a phone-friendly web app that installs on the home screen. You choose your language (English, Español or 中文) and paste a text message. You get back:
+- a verdict stamp: **SCAM / BE CAREFUL / SAFE** (ESTAFA / CUIDADO / SEGURO, 诈骗 / 小心 / 安全)
+- a 2–3 sentence explanation **in your language**, so you learn to spot the trick yourself
+- the warning signs it found
+- **a translation of the message into your language** if it was written in another one. A grandmother who reads Spanish can understand an English toll scam, and why it's fake.
 
 It works in two layers:
 1. **Layer 1 (our trained model):** runs locally, is free, and checks every message.
@@ -79,21 +84,34 @@ Full tables: `results/summary.md`. Every prediction: `results/predictions.csv`.
 ## What we'd do next
 1. Replace the AI-drafted test messages with real ones quoted in public warnings and scam-report sites. Have native Spanish and Chinese speakers on the team check every label and rate the agent's explanations.
 2. Test with a real grandparent: is the explanation clear, and what would they do next?
+3. A native Android app that lets you *share* a text straight from the messages app into SecondLook, so there's no copying and pasting.
+
+## The app
+- **Phone:** open the app link on a phone and choose *Add to Home Screen* (iPhone: Share button; Android: browser menu). It then opens full-screen with its own icon.
+- **Spending cap:** every Claude call is counted, and once a day's limit is reached (default $3, set with `DAILY_LIMIT_USD`), the app answers with Layer 1 only and says so. A public link can't drain the API credit.
+- **Design for older eyes:** it uses the Atkinson Hyperlegible typeface (made for low-vision readers) at an 18px base size, a stamp you can read at a glance, and high-contrast colours.
+- Note: the results above were measured with explanations in the message's own language. The "explain in your language" and translation features were added to the app afterwards and haven't been through the same evaluation yet.
+
+## Deploy it (free, Hugging Face Spaces)
+1. `python scripts/build_hf_space.py` builds `dist/hf_space/`.
+2. At huggingface.co, go to **New Space**, choose the **Gradio** SDK and the free **CPU basic** hardware, then upload everything inside `dist/hf_space/`.
+3. In the Space's **Settings → Variables and secrets**, add the secret `ANTHROPIC_API_KEY`. Never put a key in a file.
+4. Wait for the build (a few minutes), then open the Space link on your phone and add it to the home screen.
 
 ## How to run
 ```bash
 pip install -r requirements.txt
 python scripts/train_layer1.py           # ~2 min on CPU
-python -m pytest -q                      # 26 tests, no API calls
+python -m pytest -q                      # 35 tests, no API calls
 python scripts/evaluate.py               # free part of the evaluation
 export ANTHROPIC_API_KEY=...             # never commit your key
 python scripts/evaluate.py --agent       # two-layer system (we paid $2.84)
 python scripts/evaluate.py --agent --agent-only   # both systems (we paid $4.39 in total)
-python app.py                            # demo at http://127.0.0.1:7860
+python app.py                            # SecondLook at http://127.0.0.1:7860
 ```
 Agent answers are cached in `results/agent_cache.jsonl`, so reruns are free. Spending stops at `--budget` dollars (default $10).
 
 ## Sources
 - Data: [SMS Spam Collection (UCI)](https://archive.ics.uci.edu/dataset/228/sms+spam+collection). Scam types: [FTC top text scams 2024](https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2025/04/top-text-scams-2024), [FTC unpaid tolls](https://consumer.ftc.gov/consumer-alerts/2025/01/got-text-about-unpaid-tolls-its-probably-scam), [FCC toll scams](https://www.fcc.gov/consumer-governmental-affairs/how-spot-and-avoid-toll-road-payment-scam-texts), [FCC package delivery scams](https://www.fcc.gov/how-identify-and-avoid-package-delivery-scams), [FTC task scams](https://consumer.ftc.gov/consumer-alerts/2025/08/how-spot-avoid-task-scams), [FTC job-offer texts 2026](https://consumer.ftc.gov/consumer-alerts/2026/04/job-offer-text-probably-scam) ([español](https://consumidor.ftc.gov/alertas-para-consumidores/2026/04/es-probable-que-ese-mensaje-de-texto-con-una-propuesta-de-trabajo-sea-una-estafa)), [FCC scam glossary](https://www.fcc.gov/scam-glossary), [FBI: Chinese police imposters](https://www.fbi.gov/investigate/cyber/alerts/2024/chinese-police-imposters-incorporate-aggressive-tactics-to-target-us-based-chinese-community), [FBI: health-insurance impersonation](https://www.fbi.gov/investigate/cyber/alerts/2025/criminals-impersonate-us-health-insurance-providers-and-chinese-law-enforcement-to-target-chinese-speakers-residing-in-the-united-states), [FCC: scams targeting Chinese-Americans](https://www.fcc.gov/chinese-language-robocall-scams), [FTC: Chinese consulate impersonation](https://consumer.ftc.gov/consumer-alerts/2018/04/scammers-impersonate-chinese-consulate).
-- Models and libraries: [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2), [sentence-transformers](https://www.sbert.net/), [scikit-learn](https://scikit-learn.org/), [Anthropic Claude API](https://docs.claude.com/) (Claude Opus 5.5), [Gradio](https://www.gradio.app/), pandas.
+- Models and libraries: [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2), [sentence-transformers](https://www.sbert.net/), [scikit-learn](https://scikit-learn.org/), [Anthropic Claude API](https://docs.claude.com/) (Claude Opus 5.5), [Gradio](https://www.gradio.app/), pandas, [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) and [Noto Sans SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC) typefaces.
 - AI tools: Claude (Anthropic) via Claude Code helped design the project, write code, and draft the test messages from the cited warnings.

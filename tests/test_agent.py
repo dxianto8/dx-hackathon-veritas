@@ -48,3 +48,19 @@ def test_agent_refusal_is_inconclusive():
     client, _ = fake_client(stop_reason="refusal")
     v = check_with_agent("hello", 0.7, client=client)
     assert v.verdict == "suspicious"
+
+
+def test_agent_reply_language_and_translation():
+    client, msgs = fake_client(submit_args={"verdict": "scam", "confidence": 0.9, "language": "zh",
+                                            "explanation": "Este es un fraude.", "red_flags": ["enlace falso"],
+                                            "translation": "Su paquete..."})
+    v = check_with_agent("您的包裹 https://usps-x.top", 0.8, client=client, reply_language="Spanish")
+    assert v.translation == "Su paquete..."
+    assert "Spanish" in msgs.calls[0]["messages"][0]["content"]
+
+
+def test_default_prompt_has_no_reply_language():
+    client, msgs = fake_client(submit_args={"verdict": "safe", "confidence": 0.9, "language": "en",
+                                            "explanation": "ok", "red_flags": []})
+    check_with_agent("hi", 0.1, client=client)
+    assert "reader's language" not in msgs.calls[0]["messages"][0]["content"]
