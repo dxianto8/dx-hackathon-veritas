@@ -34,7 +34,7 @@ HEAD = """
 
 CSS = """
 :root { --ink:#1F2A44; --paper:#F6F8FB; --rule:#D5DAE3; --scam:#C62828; --careful:#A15C00; --safe:#2E7D32; --muted:#55607A; }
-body, .gradio-container { background: var(--paper) !important; }
+html, body, gradio-app, .app, .main, .contain, .gradio-container { background: var(--paper) !important; }
 .gradio-container { --color-accent: #1F2A44; --color-accent-soft: #E3E8F2; --checkbox-background-color-selected: #1F2A44;
   --checkbox-border-color-selected: #1F2A44; --checkbox-border-color-focus: #1F2A44; --checkbox-label-background-fill-selected: #E3E8F2; }
 #lang input[type=radio] { accent-color: #1F2A44; }
